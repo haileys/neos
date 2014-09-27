@@ -1,4 +1,4 @@
-OBJECTS = src/loader.o src/main.o
+OBJECTS = src/loader.o src/main.o src/paging.o
 
 CFLAGS = \
 	-Wall -Wextra -pedantic -Werror -nostdlib -nostdinc -fno-builtin \

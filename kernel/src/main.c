@@ -1,5 +1,8 @@
 #include "multiboot.h"
+#include "paging.h"
 #include "types.h"
+
+extern int end_of_image;
 
 void
 panic(const char* msg)
@@ -19,7 +22,14 @@ kmain(multiboot_info_t* mb, uint32_t magic)
         panic("bad magic multiboot number");
     }
 
-    (void)mb;
+    reserve_phys_to((phys_t)&end_of_image);
 
-    for(;;);
+    for(size_t i = 0; i < mb->mods_count; i++) {
+        multiboot_module_t* mods = (void*)mb->mods_addr;
+        reserve_phys_to(mods[i].mod_end);
+    }
+
+    init_paging();
+
+    panic("ok!");
 }
