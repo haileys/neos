@@ -126,67 +126,67 @@ idtr:
 isr_divide_by_zero:
     push .msg
     call panic
-    .msg db "exception: divide by zero"
+    .msg db "exception: divide by zero", 0
 
 isr_debug:
     push .msg
     call panic
-    .msg db "exception: debug"
+    .msg db "exception: debug", 0
 
 isr_nmi:
     push .msg
     call panic
-    .msg db "exception: non-maskable interrupt"
+    .msg db "exception: non-maskable interrupt", 0
 
 isr_breakpoint:
     push .msg
     call panic
-    .msg db "exception: breakpoint"
+    .msg db "exception: breakpoint", 0
 
 isr_overflow:
     push .msg
     call panic
-    .msg db "exception: overflow"
+    .msg db "exception: overflow", 0
 
 isr_bound_range_exceeded:
     push .msg
     call panic
-    .msg db "exception: bound range exceeded"
+    .msg db "exception: bound range exceeded", 0
 
 isr_invalid_opcode:
     push .msg
     call panic
-    .msg db "exception: invalid opcode"
+    .msg db "exception: invalid opcode", 0
 
 isr_device_not_available:
     push .msg
     call panic
-    .msg db "exception: device not available"
+    .msg db "exception: device not available", 0
 
 isr_double_fault:
     push .msg
     call panic
-    .msg db "exception: double fault"
+    .msg db "exception: double fault", 0
 
 isr_invalid_tss:
     push .msg
     call panic
-    .msg db "exception: invalid tss"
+    .msg db "exception: invalid tss", 0
 
 isr_segment_not_present:
     push .msg
     call panic
-    .msg db "exception: segment not present"
+    .msg db "exception: segment not present", 0
 
 isr_stack_segment_fault:
     push .msg
     call panic
-    .msg db "exception: stack segment fault"
+    .msg db "exception: stack segment fault", 0
 
 isr_general_protection_fault:
     push .msg
     call panic
-    .msg db "exception: general protection fault"
+    .msg db "exception: general protection fault", 0
 
 section .bss
 align 4
