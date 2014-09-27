@@ -1,7 +1,7 @@
 #include "multiboot.h"
 #include "types.h"
 
-static void
+void
 panic(const char* msg)
 {
     char* vram = (char*)0xb8000;
@@ -9,7 +9,7 @@ panic(const char* msg)
         *vram++ = *msg++;
         *vram++ = 0x4f; // white on red
     }
-    for(;;);
+    __asm__("cli \n hlt");
 }
 
 void
