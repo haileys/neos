@@ -74,10 +74,17 @@ loader:
     idt_ent 11, isr_segment_not_present
     idt_ent 12, isr_stack_segment_fault
     idt_ent 13, isr_general_protection_fault
+
+    idt_ent 32, irq_timer
+    idt_ent 33, irq_keyboard
+    idt_ent 39, irq_spurious
 %unmacro idt_ent 2
 
     ; load idt
     lidt [idtr]
+
+    ; enable interrupts
+    sti
 
     ; setup fpu
     fninit
@@ -187,6 +194,25 @@ isr_general_protection_fault:
     push .msg
     call panic
     .msg db "exception: general protection fault", 0
+
+irq_timer:
+    push eax
+    mov al, 0x20
+    out 0xa0, al
+    out 0x20, al
+    pop eax
+    iret
+
+irq_keyboard:
+    push eax
+    mov al, 0x20
+    out 0xa0, al
+    out 0x20, al
+    pop eax
+    iret
+
+irq_spurious:
+    iret
 
 section .bss
 align 4
