@@ -24,6 +24,23 @@ loader:
     mov gs, eax
     mov ss, eax
 
+    ; remap IRQs to interrupts 0x20+
+%macro outb 2
+    mov al, %2
+    out %1, al
+%endmacro
+    outb 0x20, 0x11
+    outb 0xa0, 0x11
+    outb 0x21, 0x20
+    outb 0xa1, 0x28
+    outb 0x21, 0x04
+    outb 0xa1, 0x02
+    outb 0x21, 0x01
+    outb 0xa1, 0x01
+    outb 0x21, 0x00
+    outb 0xa1, 0x00
+%unmacro outb 2
+
     mov esp, stack
     push eax ; multiboot magic number
     push ebx ; pointer to multiboot struct
@@ -34,7 +51,7 @@ loader:
     mov cr0, eax
 
     push dword 0
-    jmp $
+    jmp kmain
 
 gdtr:
     dw (gdt.end - gdt) - 1
@@ -72,6 +89,9 @@ gdt:
     db 0xcf       ; flags (32 bit | 4kb granularity), limit 16-19
     db 0x00       ; base 24-31
 .end:
+
+idt:
+
 
 section .bss
 align 4
